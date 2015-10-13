@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+	<?php include "task1.php"; ?>
   <head>
     <meta charset="utf-8">
     <title>Lab 1</title>
@@ -49,43 +50,7 @@
 				</div>
 				<div role="tabpanel" class="tab-pane  <?php if($isTask2){echo 'active';}?>" id="task2">
 					<br/>
-					<?php 
-						if(isset($_POST['date'])){
-							$date = DateTime::createFromFormat('Y-m-d', $_POST['date']);
-							$firstDay = DateTime::createFromFormat('Y-m-d', $date->format('Y-m-').'01');
-							$firstDay = $firstDay->format('N');
-							
-							print '<p>You select: '. $date->format('d M Y'). '</p>';
-							$titles = array('Пн','Вт','Ср','Чт','Пт','Сб','Вс');							
-							$max_day = cal_days_in_month(CAL_GREGORIAN, $date->format('m'), $date->format('Y'));
-							$selected = $date->format('d');
-							print '<table class="table table-bordered table-hover"><thead><tr>';
-							foreach($titles as $v){
-								print '<th class="text-center">'.$v.'</th>';
-							}
-							print '</tr></thead><tbody><tr>';
-							$skip = 1;
-							while($skip<$firstDay){
-								print '<td></td>';
-								$skip++;
-							}
-							$skip--;
-							for($day = 1; $day <=$max_day; $day++){
-								print '<td'.($day==$selected?' class="success"':'').'>'.$day.'</td>';
-								if($skip==6){
-									if($day!=$max_day){
-										print '</tr><tr>';
-									}
-								}
-								$skip = ($skip+1)%7;
-							}
-							while($skip!=0){
-								print '<td></td>';
-								$skip = ($skip+1)%7;
-							}
-							print '</tr></tbody></table>';
-						}
-					?>
+					<?php calendar(); ?>
 					<form method="POST">
 					  <div class="form-group col-md-8 col-md-offset-2">
 						<input type="date" class="form-control" id="exampleName" name="date" placeholder="Имя" required>
@@ -101,7 +66,7 @@
 		<br/>
 	</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </body>
